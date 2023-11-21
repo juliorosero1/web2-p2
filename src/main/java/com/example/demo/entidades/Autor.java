@@ -17,4 +17,11 @@ public class Autor {
     private String nombre;
     private String apellido;
     private String email;
+
+    public void copyDataFromUser(Autor source) {
+        this.id = source.getId();
+        this.email = source.getEmail();
+        this.nombre = source.getNombre();
+        this.apellido = source.getApellido();
+    }
 }
