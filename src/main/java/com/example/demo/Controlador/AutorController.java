@@ -40,24 +40,22 @@ public class AutorController {
     }
 
 
-//EDITAR
-
+    //EDITAR
     @PutMapping("/autores2/{id}")
-    public ResponseEntity<Autor> updateUser(@PathVariable int id, @RequestBody Autor autorData){
-        //En primer lugar, buscamos el Usuario
-        Optional<Autor> autor = autorRepository.findById(id);
+    public ResponseEntity<Autor> updateUser(@PathVariable int id, @RequestBody Autor autorData) {
+        Optional<Autor> optionalAutor = autorRepository.findById(id);
 
-        //Usuario encontrado para realizar update sobre él.
-        Autor autorActualizar = autor.get();
+        Autor autor = optionalAutor.get();
 
-        //Copiamos los nuevos datos al usuario
-        Autor autorActualiza;
-        autorActualizar.copyDataFromUser(autorData);
+        // Actualizar directamente los campos
+        autor.setNombre(autorData.getNombre());
+        autor.setApellido(autorData.getApellido());
+        autor.setEmail(autorData.getEmail());
 
-        //Guadramos en la DB
-        Autor userSaved = autorRepository.save(autorActualizar);
+
+        // Guardar en la base de datos
+        Autor userSaved = autorRepository.save(autor);
         return ResponseEntity.ok(userSaved);
-
 
     }
 
